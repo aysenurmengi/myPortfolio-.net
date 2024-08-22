@@ -1,0 +1,183 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Statistics</h4>
+        <div class="row">
+            <!-- Diğer kartlar -->
+            <div class="col-md-3">
+                <div class="card card-stats card-warning">
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="icon-big text-center">
+                                    <i class="la la-users"></i>
+                                </div>
+                            </div>
+                            <div class="col-7 d-flex align-items-center">
+                                <div class="numbers">
+                                    <p class="card-category">Number of Skills</p>
+                                    <h4 class="card-title">@ViewBag.v1</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Diğer kartlar -->
+            <div class="col-md-3">
+                <div class="card card-stats card-success">
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="icon-big text-center">
+                                    <i class="la la-bar-chart"></i>
+                                </div>
+                            </div>
+                            <div class="col-7 d-flex align-items-center">
+                                <div class="numbers">
+                                    <p class="card-category">Total Messages</p>
+                                    <h4 class="card-title">@ViewBag.v2</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Diğer kartlar -->
+            <div class="col-md-3">
+                <div class="card card-stats card-danger">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="icon-big text-center">
+                                    <i class="la la-newspaper-o"></i>
+                                </div>
+                            </div>
+                            <div class="col-7 d-flex align-items-center">
+                                <div class="numbers">
+                                    <p class="card-category">Unread</p>
+                                    <h4 class="card-title">@ViewBag.v3</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Diğer kartlar -->
+            <div class="col-md-3">
+                <div class="card card-stats card-primary">
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="icon-big text-center">
+                                    <i class="la la-check-circle"></i>
+                                </div>
+                            </div>
+                            <div class="col-7 d-flex align-items-center">
+                                <div class="numbers">
+                                    <p class="card-category">Read</p>
+                                    <h4 class="card-title">@ViewBag.v4</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">World Map</h4>
+                        <p class="card-category">
+                            Map of the distribution of users around the world
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <div class="mapcontainer">
+                            <div id="map" class="map">
+                                <span>Alternative content for the map</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- CSS -->
+<style>
+    .mapcontainer {
+        height: 400px; /* Haritanın yüksekliği */
+        width: 100%; /* Haritanın genişliği */
+        position: relative;
+    }
+
+    .map {
+        height: 100%; /* Haritanın tam yüksekliğe sahip olması için */
+        width: 100%;
+    }
+</style>
+
+<script>
+    // Haritayı başlat ve dünya genelinde merkezileştir
+    var map = L.map('map').setView([20, 0], 2);
+
+    // OpenStreetMap fayans katmanını ekle
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+    }).addTo(map);
+
+    // Ülkeleri işaretlemek için örnek GeoJSON verisi
+    var countriesData = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-130, 55], [-130, 50], [-110, 50], [-110, 55], [-130, 55]
+                    ]]
+                },
+                "properties": {
+                    "name": "USA"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [100, 60], [100, 40], [140, 40], [140, 60], [100, 60]
+                    ]]
+                },
+                "properties": {
+                    "name": "Russia"
+                }
+            }
+            // Diğer ülkeler için daha fazla veri eklenebilir
+        ]
+    };
+
+    // Ülkeleri haritaya ekle
+    L.geoJSON(countriesData, {
+        style: function (feature) {
+            return { color: "#008000" }; // Yeşil renk
+        }
+    }).addTo(map);
+</script>
